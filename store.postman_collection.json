@@ -1,0 +1,1283 @@
+{
+	"info": {
+		"_postman_id": "d50a1929-9fab-4aeb-9e90-feac26aeb680",
+		"name": "store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25328744"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"price\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"sku\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"description\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"name\",",
+									"    \"price\",",
+									"    \"sku\",",
+									"    \"description\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Get Order Id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"productId\", jsonData.id);",
+									"    });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"orange\",\r\n    \"price\": 8,\r\n    \"sku\": 123321123,\r\n    \"description\": \"wouh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"price\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"sku\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"description\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"name\",",
+									"    \"price\",",
+									"    \"sku\",",
+									"    \"description\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{productId}},\r\n    \"name\": \"banana\",\r\n    \"price\": 155,\r\n    \"sku\": 123321123,\r\n    \"description\": \"changed description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get product by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"price\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"sku\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"description\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"name\",",
+									"    \"price\",",
+									"    \"sku\",",
+									"    \"description\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/{{productId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove product by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"price\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"sku\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"description\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"name\",",
+									"    \"price\",",
+									"    \"sku\",",
+									"    \"description\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/{{productId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"array\",\r",
+									"  \"items\": [\r",
+									"    {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"id\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"price\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"sku\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"description\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"id\",\r",
+									"        \"name\",\r",
+									"        \"price\",\r",
+									"        \"sku\",\r",
+									"        \"description\"\r",
+									"      ]\r",
+									"    },\r",
+									"    {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"id\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"price\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"sku\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"description\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"id\",\r",
+									"        \"name\",\r",
+									"        \"price\",\r",
+									"        \"sku\",\r",
+									"        \"description\"\r",
+									"      ]\r",
+									"    },\r",
+									"    {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"id\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"price\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"sku\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"description\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"id\",\r",
+									"        \"name\",\r",
+									"        \"price\",\r",
+									"        \"sku\",\r",
+									"        \"description\"\r",
+									"      ]\r",
+									"    }\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"const responseJson = pm.response.json();\r",
+									"pm.test('Response matches the expected JSON schema', function() {\r",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"let jsonData = pm.response.json();\r",
+									"let productId = pm.environment.get(\"productId\");\r",
+									"\r",
+									"pm.test(\"No object has an 'id' that was generated when the product was created\", function () {\r",
+									"    let idExists = jsonData.some(item => item.id === productId);\r",
+									"    pm.expect(idExists).to.be.false;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "List orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"array\",",
+									"  \"items\": [",
+									"    {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"id\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"name\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"sku\": {",
+									"          \"type\": \"integer\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"id\",",
+									"        \"name\",",
+									"        \"sku\"",
+									"      ]",
+									"    },",
+									"    {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"id\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"name\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"sku\": {",
+									"          \"type\": \"integer\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"id\",",
+									"        \"name\",",
+									"        \"sku\"",
+									"      ]",
+									"    },",
+									"    {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"id\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"name\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"sku\": {",
+									"          \"type\": \"integer\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"id\",",
+									"        \"name\",",
+									"        \"sku\"",
+									"      ]",
+									"    }",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"sku\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"name\",",
+									"    \"sku\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Get Order Id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"orderId\", jsonData.id);",
+									"    });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"new Order\",\r\n    \"sku\": 123425445656765\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"sku\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"id\",",
+									"    \"name\",",
+									"    \"sku\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{orderId}},\r\n    \"name\": \"order5\",\r\n    \"sku\": 123425445656765\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove order by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"sku\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"id\",",
+									"    \"name\",",
+									"    \"sku\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{orderId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{orderId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"array\",",
+									"  \"items\": {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"      \"id\": {",
+									"        \"type\": \"integer\"",
+									"      },",
+									"      \"firstName\": {",
+									"        \"type\": \"string\"",
+									"      },",
+									"      \"lastName\": {",
+									"        \"type\": \"string\"",
+									"      },",
+									"      \"email\": {",
+									"        \"type\": \"string\"",
+									"      },",
+									"      \"dateOfBirth\": {",
+									"        \"type\": \"string\"",
+									"      },",
+									"      \"emailVerified\": {",
+									"        \"type\": \"boolean\"",
+									"      },",
+									"      \"signUpDate\": {",
+									"        \"type\": \"string\"",
+									"      },",
+									"      \"status\": {",
+									"        \"type\": \"string\"",
+									"      },",
+									"      \"level\": {",
+									"        \"type\": \"string\"",
+									"      }",
+									"    },",
+									"    \"required\": [",
+									"      \"id\",",
+									"      \"firstName\",",
+									"      \"lastName\",",
+									"      \"email\",",
+									"      \"dateOfBirth\",",
+									"      \"emailVerified\",",
+									"      \"signUpDate\",",
+									"      \"status\",",
+									"      \"level\"",
+									"    ]",
+									"  }",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"firstName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"lastName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"email\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"dateOfBirth\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"emailVerified\": {",
+									"      \"type\": \"boolean\"",
+									"    },",
+									"    \"signUpDate\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"status\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"level\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"firstName\",",
+									"    \"lastName\",",
+									"    \"email\",",
+									"    \"dateOfBirth\",",
+									"    \"emailVerified\",",
+									"    \"signUpDate\",",
+									"    \"status\",",
+									"    \"level\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Get User Id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"id\", jsonData.id);",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Sasha\",\r\n    \"lastName\": \"RealS\",\r\n    \"email\": \"dream.real@gmail.com\",\r\n    \"dateOfBirth\": \"2001-10-99\",\r\n    \"emailVerified\": true,\r\n    \"signUpDate\": \"2019-08-24\",\r\n    \"status\": \"active\",\r\n    \"level\": \"lord\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"firstName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"lastName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"email\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"dateOfBirth\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"emailVerified\": {",
+									"      \"type\": \"boolean\"",
+									"    },",
+									"    \"signUpDate\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"status\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"level\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"firstName\",",
+									"    \"lastName\",",
+									"    \"email\",",
+									"    \"dateOfBirth\",",
+									"    \"emailVerified\",",
+									"    \"signUpDate\",",
+									"    \"status\",",
+									"    \"level\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"lloon\",\r\n    \"lastName\": \"Mask\",\r\n    \"email\": \"ilon.mask@gmail.com\",\r\n    \"dateOfBirth\": \"2001-10-99\",\r\n    \"emailVerified\": true,\r\n    \"signUpDate\": \"2019-08-24\",\r\n    \"status\": \"active\",\r\n    \"level\": \"lord\",\r\n    \"id\": {{id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"firstName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"lastName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"email\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"dateOfBirth\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"emailVerified\": {",
+									"      \"type\": \"boolean\"",
+									"    },",
+									"    \"signUpDate\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"status\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"level\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"firstName\",",
+									"    \"lastName\",",
+									"    \"email\",",
+									"    \"dateOfBirth\",",
+									"    \"emailVerified\",",
+									"    \"signUpDate\",",
+									"    \"status\",",
+									"    \"level\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove user by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"firstName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"lastName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"email\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"dateOfBirth\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"emailVerified\": {",
+									"      \"type\": \"boolean\"",
+									"    },",
+									"    \"signUpDate\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"status\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"level\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"firstName\",",
+									"    \"lastName\",",
+									"    \"email\",",
+									"    \"dateOfBirth\",",
+									"    \"emailVerified\",",
+									"    \"signUpDate\",",
+									"    \"status\",",
+									"    \"level\",",
+									"    \"id\"",
+									"  ]",
+									"};",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.test('Response matches the expected JSON schema', function() {",
+									"    pm.expect(tv4.validate(responseJson, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
