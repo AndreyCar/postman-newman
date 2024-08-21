@@ -16,7 +16,7 @@
   "dependencies": {
     "har-validator": "^5.1.5",
     "punycode": "^2.3.1",
-    "uuid": "^10.0.0",
+    "uuid": "^7.0.3",
     "yaml-server": "^1.10.0"
   }
 }
