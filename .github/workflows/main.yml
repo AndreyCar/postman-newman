@@ -27,8 +27,8 @@ jobs:
 
           
         -name: Run Server   
-         run: |
-            npm run tern-on-api
+         run: npm run tern-on-api
+            
 
       # Make directory to upload the test results
       - name: Make Directory for results
