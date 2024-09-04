@@ -26,9 +26,7 @@ jobs:
 
             # Run Server
             - name: Run Server
-              run: npm run tern-on-api
-              env:
-                  NODE_ENV: test
+              run: npm run tern-on-api &
 
             # Make directory to upload the test results
             - name: Make Directory for results
